@@ -2,6 +2,7 @@ from googleapiclient.discovery import build
 import os
 import json
 
+
 class Channel:
     """Класс для ютуб-канала"""
 
@@ -10,11 +11,12 @@ class Channel:
         self.channel_id = channel_id
         self.youtube = build('youtube', 'v3', developerKey="AIzaSyDWRH3IC7hklbhzPbR61vTpjwp9D8zVAiw")
         self.title = self.youtube['items'][0]['snippet']['title']
-        self.video_count = self.youtube['items'][0]['statistics']['videoCount']
+        self.video_count = int(self.youtube['items'][0]['statistics']['videoCount'])
         self.description = self.youtube['items'][0]['snippet']['description']
         self.url = f'https://www.youtube.com/channel/{self.channel_id}'
-        self.subscriber_count = self.youtube['items'][0]['statistics']['subscriberCount']
-        self.view_count = self.youtube['items'][0]['statistics']['viewCount']
+        self.subscriber_count = int(self.youtube['items'][0]['statistics']['subscriberCount'])
+        self.view_count = int(self.youtube['items'][0]['statistics']['viewCount'])
+
     def __str__(self):
         return f'{self.title}({self.url})'
 
@@ -44,14 +46,14 @@ class Channel:
     @classmethod
     def get_service(cls):
         """
-        возвращает объект для работы с YouTube API
+        Возвращает объект для работы с YouTube API
         """
         youtube = build('youtube', 'v3', developerKey="AIzaSyDWRH3IC7hklbhzPbR61vTpjwp9D8zVAiw")
         return youtube
 
     def to_json(self, filename):
         """
-        сохраняет в файл значения атрибутов экземпляра `Channel`
+        Сохраняет в файл значения атрибутов экземпляра `Channel`
         """
         with open(filename, 'w', encoding='utf-8') as file:
             information = {
