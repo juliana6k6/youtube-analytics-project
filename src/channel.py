@@ -14,9 +14,6 @@ class Channel:
         self.video_count = int(self.youtube['items'][0]['statistics']['videoCount'])
         self.description = self.youtube['items'][0]['snippet']['description']
         self.url = f'https://www.youtube.com/channel/{self.channel_id}'
-        self.subscriber_count = int(self.youtube['items'][0]['statistics']['subscriberCount'])
-        self.view_count = int(self.youtube['items'][0]['statistics']['viewCount'])
-
     def __str__(self):
         return f'{self.title}({self.url})'
 
