@@ -9,7 +9,7 @@ class Channel:
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.channel_id = channel_id
-        self.youtube = build('youtube', 'v3', developerKey="AIzaSyDWRH3IC7hklbhzPbR61vTpjwp9D8zVAiw")
+        self.youtube = build('youtube', 'v3', developerKey="AIzaSyA1AdjSyGNFqyG7mnhHB3yuX0DmHu0fgrI")
         self.title = self.youtube['items'][0]['snippet']['title']
         self.video_count = int(self.youtube['items'][0]['statistics']['videoCount'])
         self.description = self.youtube['items'][0]['snippet']['description']
