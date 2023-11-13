@@ -9,11 +9,13 @@ class Channel:
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.channel_id = channel_id
-        self.youtube = build('youtube', 'v3', developerKey="AIzaSyA1AdjSyGNFqyG7mnhHB3yuX0DmHu0fgrI")
-        self.title = self.youtube['items'][0]['snippet']['title']
-        self.video_count = int(self.youtube['items'][0]['statistics']['videoCount'])
-        self.description = self.youtube['items'][0]['snippet']['description']
+        self.youtube = build('youtube', 'v3', developerKey="AIzaSyAa9bdrXR0NRQX4X4TI6zKdfhWGHwISbCA")
+        self.response1 = self.youtube.channels().list(id=self.channel_id, part="snippet,statistics").execute()
+        self.title = self.response1['items'][0]['snippet']['title']
+        self.video_count = int(self.response1['items'][0]['statistics']['videoCount'])
+        self.description = self.response1['items'][0]['snippet']['description']
         self.url = f'https://www.youtube.com/channel/{self.channel_id}'
+
     def __str__(self):
         return f'{self.title}({self.url})'
 
@@ -45,7 +47,7 @@ class Channel:
         """
         Возвращает объект для работы с YouTube API
         """
-        youtube = build('youtube', 'v3', developerKey="AIzaSyDWRH3IC7hklbhzPbR61vTpjwp9D8zVAiw")
+        youtube = build('youtube', 'v3', developerKey="AIzaSyAa9bdrXR0NRQX4X4TI6zKdfhWGHwISbCA")
         return youtube
 
     def to_json(self, filename):
