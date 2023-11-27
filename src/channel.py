@@ -1,5 +1,4 @@
 from googleapiclient.discovery import build
-import os
 import json
 
 
@@ -14,28 +13,29 @@ class Channel:
         self.title = self.response1['items'][0]['snippet']['title']
         self.video_count = int(self.response1['items'][0]['statistics']['videoCount'])
         self.description = self.response1['items'][0]['snippet']['description']
+        self.subscriber_сount = int(self.response1["items"][0]["statistics"]["subscriberCount"])
         self.url = f'https://www.youtube.com/channel/{self.channel_id}'
 
     def __str__(self):
         return f'{self.title}({self.url})'
 
     def __gt__(self, other):
-        return self.subscriber_count > other.subscriber_count
+        return self.subscriber_сount > other.subscriber_count
 
     def __ge__(self, other):
-        return self.subscriber_count >= other.subscriber_count
+        return self.subscriber_сount >= other.subscriber_count
 
     def __lt__(self, other):
-        return self.subscriber_count < other.subscriber_count
+        return self.subscriber_сount < other.subscriber_count
 
     def __le__(self, other):
-        return self.subscriber_count <= other.subscriber_count
+        return self.subscriber_сount <= other.subscriber_count
 
     def __eq__(self, other):
-        return self.subscriber_count == other.subscriber_count
+        return self.subscriber_сount == other.subscriber_count
 
     def __ne__(self, other):
-        return self.subscriber_count != other.subscriber_count
+        return self.subscriber_сount != other.subscriber_count
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
@@ -60,9 +60,8 @@ class Channel:
                 "Название канала": self.title,
                 "Описание канала": self.description,
                 "ссылка на канал": self.url,
-                "количество подписчиков": self.subscriber_count,
+                "количество подписчиков": self.subscriber_сount,
                 "количество видео": self.video_count,
-                "общее количество просмотров": self.view_count
+                "общее количество просмотров": self.video_count
             }
             json.dump(information, file, ensure_ascii=False)
-
