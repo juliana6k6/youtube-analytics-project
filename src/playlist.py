@@ -8,19 +8,18 @@ class PlayList:
     def __init__(self, playlist_id):
         self.playlist_id = playlist_id
         self.youtube = build('youtube', 'v3', developerKey="AIzaSyA1AdjSyGNFqyG7mnhHB3yuX0DmHu0fgrI")
+        self.playlist_info = self.youtube.playlists().list(id=self.playlist_id,
+                                                            part='snippet',
+                                                            ).execute()
+        self.title = self.playlist_info['items'][0]['snippet']['title']
         self.playlist_videos = self.youtube.playlistItems().list(playlistId=playlist_id,
                                                        part='contentDetails',
                                                        maxResults=50,
                                                        ).execute()
-        self.playlists_info = self.youtube.playlists().list(channelId=playlist_id, part='contentDetails,snippet',
-                                                       maxResults=50,
-                                                       ).execute()
         self.video_ids: list[str] = [video['contentDetails']['videoId'] for video in self.playlist_videos['items']]
         self.video_response = self.youtube.videos().list(part='contentDetails,statistics',
-                                               id=','.join(self.video_ids)
-                                               ).execute()
-        self.title = self.playlists_info['items'][0]['snippet']['title']
-        self.url = f"https://www.youtube.com/playlist?list=/{self.playlist_id}"
+                                               id=','.join(self.video_ids)).execute()
+        self.url = f'https://www.youtube.com/playlist?list={self.playlist_id}'
 
     @property
     def total_duration(self):
